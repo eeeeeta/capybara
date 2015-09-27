@@ -15,6 +15,7 @@ You'll need the following dependencies:
 - [lemonbar](https://github.com/LemonBoy/bar) (obviously)
 - [xtitle](https://github.com/baskerville/xtitle)
 - the powerline fonts (specifically, Inconsolata for Powerline). [(you might be able to get them here)](https://github.com/powerline/fonts)
+- the icomoon font (provided in this repository - install it on your system!)
 - [pulseaudio-ctl](https://github.com/graysky2/pulseaudio-ctl) *(needed for volume)*
 - mpc and a MPD server *(optional, only if you want the bar to display MPD info)*
 
@@ -45,7 +46,7 @@ Patches welcome.
 
 You probably don't have exactly the same screen as me. Change this line:
 
-    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\"", "w")) == NULL) {
+    if ((barfp = popen("lemonbar -g 1890x20+15+10...
 
 Specify your own dimensions to lemonbar (after the -g option).
 

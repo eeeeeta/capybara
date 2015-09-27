@@ -7,7 +7,6 @@
  */
 #define GRAY "%{F#808080}"
 #define WHITE "%{F#FFFFFF}"
-#define MUSIC "♫"
 #define RARROW ""
 #define LARROW ""
 #include <stdio.h>
@@ -61,7 +60,7 @@ static char *get_load() {
         strncpy(ret, "err", 14);
         return ret;
     }
-    snprintf(ret, 50, "%s %sload%s %1.2f", LARROW, GRAY, WHITE, loadavg[0]);
+    snprintf(ret, 50, "%s %s\ue608%s %1.2f", LARROW, GRAY, WHITE, loadavg[0]);
     return ret;
 }
 #ifndef NO_PULSEAUDIO
@@ -70,8 +69,8 @@ static char *get_vol() {
     if (strcmp(vol, "failed") == 0) return vol;
     static char ret[100] = {0};
     char *rvol = strtok(vol, " ");
-    char *vstr = "vol";
-    if (strcmp(strtok(NULL, " "), "yes") == 0) vstr = "muted";
+    char *vstr = "\ue60b";
+    if (strcmp(strtok(NULL, " "), "yes") == 0) vstr = "\ue60d";
     snprintf(ret, 100, "%s %s%s %s%s%%", LARROW, GRAY, vstr, WHITE, rvol);
     free(vol);
     return ret;
@@ -90,15 +89,15 @@ static char *get_time() {
     timeinfo = localtime(&rawtime);
     strcpy(ret, LARROW);
     strcat(ret, " ");
-    strftime(stime, 45, "%%{F#808080}time %%{F#FFFFFF}%H:%M", timeinfo);
+    strftime(stime, 45, "%%{F#808080}\ue602 %%{F#FFFFFF}%H:%M", timeinfo);
     strcat(ret, stime);
     return ret;
 }
 #ifndef NO_MPD
 static char *get_mpd() {
-    static char ret[175] = {0};
+    static char ret[250] = {0};
     static char *res = NULL;
-    res = exec("mpc current -f \"[%{F##808080}title%{F##FFFFFF} %title% %{F##808080}artist %{F##FFFFFF}%artist%[ %{F##808080}album %{F##FFFFFF}%album%]]\"");
+    res = exec("mpc current -f \"[%{F##808080}\ue600 title%{F##FFFFFF} %title% %{F##808080}artist %{F##FFFFFF}%artist%[ %{F##808080}album %{F##FFFFFF}%album%] %{F##808080}\ue600]\"");
     strcpy(ret, res);
     free(res);
     return ret;
@@ -182,7 +181,7 @@ static char *get_win(bool cached) {
     }
     static char ret[150] = {0};
     strcpy(ret, GRAY);
-    strcat(ret, "desktop ");
+    strcat(ret, "\ue603 ");
     strcat(ret, WHITE);
     strcat(ret, win);
     if (strlen(uwin) > 0) {
@@ -199,7 +198,7 @@ static char *get_uname() {
     strcpy(ret, LARROW);
     strcat(ret, " ");
     strcat(ret, GRAY);
-    strcat(ret, "user ");
+    strcat(ret, "\ue626 ");
     strcat(ret, WHITE);
     strcat(ret, uname);
     return ret;
@@ -216,7 +215,7 @@ static char *get_xtitle(bool cached) {
         if (cxtitle[0] == '\n') strcpy(cxtitle, "none");
     }
     strcpy(ret, GRAY);
-    strcat(ret, "win ");
+    strcat(ret, "\ue610 ");
     strcat(ret, WHITE);
     strcat(ret, cxtitle);
     strcat(ret, " ");
@@ -247,7 +246,7 @@ int main(int argc, char *argv[]) {
 #endif
     printf("[+] Setting up...\n");
     printf("spawning lemonbar...");
-    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\"", "w")) == NULL) {
+    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\" -f \"icomoon\"", "w")) == NULL) {
         printf("failed (is it installed and in your PATH?)\n");
         if (errno != 0) perror("popen() failed");
         return EXIT_FAILURE;
