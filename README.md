@@ -20,21 +20,21 @@ You'll need the following dependencies:
 
 Then, compile!
 
-  $ gcc barm.c -o barm
+    $ gcc barm.c -o barm
 
 If you don't want pulseaudio or mpd support, there are compile flags for that.
 If you want to change the font, go edit the source yourself.
 
-  $ gcc barm.c -o barm -DNO_PULSEAUDIO -DNO_MPD
+    $ gcc barm.c -o barm -DNO_PULSEAUDIO -DNO_MPD
 
 Then, run it!
 
-  $ ./barm
+    $ ./barm
 
 It should automagically update window title, current desktop (of focused monitor), load, and time.
 If you want it to update instantly, send it a SIGUSR1 (this is needed if you want instant updates for volume, etc):
 
-  $ kill -USR1 `pidof barm`
+    $ kill -USR1 `pidof barm`
 
 ## How do I configure it?
 
@@ -45,7 +45,7 @@ Patches welcome.
 
 You probably don't have exactly the same screen as me. Change this line:
 
-  if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\"", "w")) == NULL) {
+    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\"", "w")) == NULL) {
 
 Specify your own dimensions to lemonbar (after the -g option).
 
