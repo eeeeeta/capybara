@@ -97,7 +97,7 @@ static char *get_time() {
 static char *get_mpd() {
     static char ret[250] = {0};
     static char *res = NULL;
-    res = exec("mpc current -f \"[%{F##808080}\ue600 title%{F##FFFFFF} %title% %{F##808080}artist %{F##FFFFFF}%artist%[ %{F##808080}album %{F##FFFFFF}%album%] %{F##808080}\ue600]\"");
+    res = exec("mpc current -f \"[%{F##808080}\ue61a title%{F##FFFFFF} %title% %{F##808080}artist %{F##FFFFFF}%artist%[ %{F##808080}album %{F##FFFFFF}%album%] %{F##808080}]\"");
     strcpy(ret, res);
     free(res);
     return ret;
@@ -246,7 +246,7 @@ int main(int argc, char *argv[]) {
 #endif
     printf("[+] Setting up...\n");
     printf("spawning lemonbar...");
-    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Inconsolata for Powerline\" -f \"icomoon\"", "w")) == NULL) {
+    if ((barfp = popen("lemonbar -g 1890x20+15+10 -f \"Fantasque Sans Mono\" -f \"icomoon\"", "w")) == NULL) {
         printf("failed (is it installed and in your PATH?)\n");
         if (errno != 0) perror("popen() failed");
         return EXIT_FAILURE;
