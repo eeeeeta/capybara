@@ -1,0 +1,4 @@
+: vbuf.c |> gcc -static -g -c vbuf.c -o vbuf.o |> vbuf.o
+: vbuf.o |> ar rcs vbuf.a vbuf.o |> vbuf.a
+: vbuf.c |> gcc -shared -fPIC -g vbuf.c -o vbuf.so |> vbuf.so
+
