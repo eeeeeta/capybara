@@ -3,14 +3,13 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "modules.h"
 char *example_function(void) {
-    return "woohoo!";
+    return "hello, world";
 };
-bool module_register(cbrm_reg_fn regfn) {
-    printf("example extension: registering\n");
+bool module_register(cbrm_reg_fn regfn, cbrm_reg_fd_fn regfdfn) {
     regfn("example_function", &example_function);
-    printf("yay, done\n");
     return true;
 }
-CBR_DECLARE_MODULE_V1("example_module", 1, &module_register);
+CBR_DECLARE_MODULE_V1("helloworld_ext", 1, &module_register);

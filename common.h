@@ -8,6 +8,9 @@ enum be_type {
 
 extern DPA *symbols;
 extern DPA *bar_entries;
+extern DPA *poll_fds;
+extern char *fontstr;
+extern char *dimstr;
 
 struct symbol_entry {
     cbrm_disp_fn dfn;

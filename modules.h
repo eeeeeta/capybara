@@ -12,10 +12,11 @@
 #define CBRM_MAGIC(x)	((x) & 0xffff0000)
 #define CBRM_VERSION(x)	((x) & 0x0000ffff)
 
-
 typedef char *(*cbrm_disp_fn) (void);
 typedef bool (*cbrm_reg_fn) (char *name, cbrm_disp_fn dfn);
-typedef bool (*cbrm_register_fn) (cbrm_reg_fn regfn);
+typedef bool (*cbrm_reg_fd_fn) (int fd, short events);
+
+typedef bool (*cbrm_register_fn) (cbrm_reg_fn mod_register, cbrm_reg_fd_fn mod_register_fd);
 
 struct cbrm_header_v1 {
     int apiver;

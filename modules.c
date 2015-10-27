@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <err.h>
 #include <dlfcn.h>
+#include <poll.h>
+#include <signal.h>
 #include "modules.h"
 #include "varlibs/vbuf.h"
 #include "common.h"
@@ -16,6 +18,19 @@ extern bool mod_register(char *sym, cbrm_disp_fn dfn) {
     sa->name = sym;
     DPA_store(symbols, sa);
     printf("[+] Registered symbol %s.\n", sym);
+    return true;
+}
+/*
+ * XXX: the declaration of 'events' as a short is unportable.
+ * In general, this whole interface isn't exactly great :P
+ */
+extern bool mod_register_fd(int fd, short events) {
+    struct pollfd *pfd = malloc(sizeof(struct pollfd));
+    if (pfd == NULL) err(EXIT_FAILURE, "mod_register_fd(): malloc failed");
+    pfd->fd = fd;
+    pfd->events = events;
+    DPA_store(poll_fds, pfd);
+    return true;
 }
 extern void load_ext(char *name) {
     void *handle = NULL;
@@ -49,7 +64,7 @@ extern void load_ext(char *name) {
                 if (!hdr->regfn) {
                     fprintf(stderr, "[*] extension %s has no register function. what exactly is it meant to do?! :P\n", name);
                 }
-                if (hdr->regfn && !hdr->regfn(&mod_register)) {
+                if (hdr->regfn && !hdr->regfn(&mod_register, &mod_register_fd)) {
                     fprintf(stderr, "[-] extension %s indicated failure on load :(\n", name);
                     dlclose(handle);
                     return;

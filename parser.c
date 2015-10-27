@@ -27,7 +27,7 @@ void parse_cfg(char *filename) {
     while (c = fgetc(fd)) {
         if (c == '\n' || c == EOF) {
             if (state == READ_VALUE) {
-                switch (type) {
+                switch (toupper(type)) {
                     case 'L':
                         {
                             char *filename = varstr_pack(value);
@@ -120,6 +120,14 @@ oline_failure:                  free(be);
                             }
                         }
                         break;
+                    case 'F':
+                        fontstr = varstr_pack(value);
+                        printf("[+] Changed font configuration to %s\n", fontstr);
+                        break;
+                    case 'I':
+                        dimstr = varstr_pack(value);
+                        printf("[+] Changed dimension configuration to %s\n", dimstr);
+                        break;
                     case 'Z':
                         errx(EXIT_FAILURE, "this should never happen (unless I screwed up somewhere!)");
                         break;
@@ -145,10 +153,7 @@ oline_failure:                  free(be);
                 }
                 break;
             case READ_DONE:
-                if (c != ' ') {
-                    errx(EXIT_FAILURE, "failed to parse config: no space after line type\n");
-                }
-                else {
+                if (c == ' ') {
                     state = READ_VALUE;
                 }
                 break;
