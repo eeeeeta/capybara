@@ -1,2 +1,2 @@
 : extension_example.c |> gcc -shared -fPIC -g %f -o %o |> test.so
-: barmv2.c varlibs/vbuf.a |> gcc -g -ldl %f -o %o |> barm2
+: barmv2.c parser.c modules.c varlibs/vbuf.a |> gcc -g -ldl %f -o %o |> barm2
